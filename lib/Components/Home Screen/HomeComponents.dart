@@ -78,7 +78,7 @@ class ItemCard extends StatelessWidget {
               width:MediaQuery.of(context).size.width * 0.4,
               height: MediaQuery.of(context).size.height * 0.2,
               decoration: BoxDecoration(
-                color:Colors.grey ,
+                color:Colors.grey[700],
                 borderRadius: BorderRadius.only(topLeft: Radius.circular(20),topRight: Radius.circular(20))
               ),
               child: Image.network(
@@ -92,7 +92,7 @@ class ItemCard extends StatelessWidget {
             child: Text(
               data['Name'],
               style: ksmallFontStylewithStyle.copyWith(
-                  fontSize: 15, color: LoginColor),
+                  fontSize: 15, ),
             ),
           ),
           Padding(
@@ -100,7 +100,7 @@ class ItemCard extends StatelessWidget {
             child: Text(
               data['Price'],
               style: ksmallFontStylewithStyle.copyWith(
-                  fontSize: 15, color: LoginColor),
+                  fontSize: 15, ),
             ),
           )
         ],
