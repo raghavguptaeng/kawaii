@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "932763915224",
+    "project_id": "kawaii-510c4",
+    "storage_bucket": "kawaii-510c4.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:932763915224:android:35188a21c509b90b2098ad",
+        "android_client_info": {
+          "package_name": "ninja.raghavgupta.kawaii"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "932763915224-mdmr8mpvus9bj3urhb8k67dgomcp4e7m.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "ninja.raghavgupta.kawaii",
+            "certificate_hash": "c9a75a00a14b6a16654e7d484bd4c27d9b4114e4"
+          }
+        },
+        {
+          "client_id": "932763915224-tt8e5lbt4re7c8t9pvge5o1di814gsar.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB_m19yJyu-U-uRlAAeYMXVFK34iijUOsk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "932763915224-tt8e5lbt4re7c8t9pvge5o1di814gsar.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
