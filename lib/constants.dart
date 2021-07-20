@@ -12,6 +12,12 @@ var subFontStyle = TextStyle(
 );
 var LoginColor = Color(0xFF7C6AD6);
 var ksecColor = Color(0xFFBADBEE);
+var klightBlue = Color(0xFF4E1A64);
+var ksmallFontStyle = TextStyle(
+    color: Colors.white,
+    fontSize: 20,
+    fontWeight: FontWeight.bold
+);
 String RazorpayKey = 'rzp_test_GHq9Aq3Mdmd3cD';
 var cardDecoration = BoxDecoration(
     boxShadow: [
