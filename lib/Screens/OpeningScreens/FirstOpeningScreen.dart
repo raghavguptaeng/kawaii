@@ -16,9 +16,9 @@ class _FirstScreenState extends State<FirstScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    // Future.delayed(
-    //   Duration(seconds: 2),()=>Navigator.pushReplacementNamed(context, (FirebaseAuth.instance.currentUser!.uid!=null)?HomeScreen.id:Login.id)
-    // );
+    Future.delayed(
+      Duration(seconds: 2),()=>Navigator.pushReplacementNamed(context, (FirebaseAuth.instance.currentUser!.uid!=null)?HomeScreen.id:Login.id)
+    );
   }
 
   @override
