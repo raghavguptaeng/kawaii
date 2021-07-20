@@ -21,38 +21,42 @@ class Home extends StatelessWidget {
               fontFamily: 'subFont'
             ),),
             BestSellerCard(),
-            Column(
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text("Popular Deals",style: ksmallFontStylewithStyle,),
-                    Text("See all",style: TextStyle(color: Colors.grey),),
-                  ],
-                ),
-                SizedBox(height: 10,),
-                StreamBuilder<QuerySnapshot>(
-                  stream: FirebaseFirestore.instance.collection('Items').snapshots(),
-                  builder: (context,snapshot){
-                    var data = snapshot.data!.docs;
-                    return SizedBox(
-                      height: MediaQuery.of(context).size.height*0.35,
-                      child: ListView.builder(
-                        scrollDirection: Axis.horizontal,
-                        itemCount: data.length,
-                        itemBuilder: (context,index){
-                          return ItemCard(data: data[index],);
-                        },
-                      ),
-                    );
-                  },
-                )
-              ],
-            )
+            PopularDeals()
           ],
         ),
       ),
     );
+  }
+
+  Column PopularDeals() {
+    return Column(
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text("Popular Deals",style: ksmallFontStylewithStyle,),
+                  Text("See all",style: TextStyle(color: Colors.grey),),
+                ],
+              ),
+              SizedBox(height: 10,),
+              StreamBuilder<QuerySnapshot>(
+                stream: FirebaseFirestore.instance.collection('Items').snapshots(),
+                builder: (context,snapshot){
+                  var data = snapshot.data!.docs;
+                  return SizedBox(
+                    height: MediaQuery.of(context).size.height*0.35,
+                    child: ListView.builder(
+                      scrollDirection: Axis.horizontal,
+                      itemCount: data.length,
+                      itemBuilder: (context,index){
+                        return ItemCard(data: data[index],);
+                      },
+                    ),
+                  );
+                },
+              )
+            ],
+          );
   }
 }
 

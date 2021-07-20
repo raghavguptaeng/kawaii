@@ -25,8 +25,8 @@ class _HomeScreenState extends State<HomeScreen> {
               index: navPos,
               children: [
                 Home(),
-                // Page2(),
-                // Page3(),
+                Container(),
+                Container(),
                 Profile()
               ],
             ),
