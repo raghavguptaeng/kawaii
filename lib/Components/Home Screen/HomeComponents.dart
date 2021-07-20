@@ -49,3 +49,26 @@ class BestSellerCard extends StatelessWidget {
     );
   }
 }
+
+class ItemCard extends StatelessWidget {
+  var data;
+  ItemCard({this.data});
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: cardDecoration,
+      padding: EdgeInsets.all(15),
+      width: MediaQuery.of(context).size.width*0.4,
+      margin: EdgeInsets.only(right: 20 ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Center(child: Image.network(data['ImageUrl'],height: MediaQuery.of(context).size.height*0.2,)),
+          Text(data['Name'],style: ksmallFontStylewithStyle.copyWith(fontSize: 15,color: LoginColor),),
+          Text(data['Price'],style: ksmallFontStylewithStyle.copyWith(fontSize: 15,color: LoginColor),)
+        ],
+      ),
+    );
+  }
+}

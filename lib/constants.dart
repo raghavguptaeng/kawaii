@@ -18,6 +18,12 @@ var ksmallFontStyle = TextStyle(
     fontSize: 20,
     fontWeight: FontWeight.bold
 );
+var ksmallFontStylewithStyle = TextStyle(
+    color: Colors.black,
+    fontSize: 20,
+    fontFamily: 'subFont',
+    //fontWeight: FontWeight.bold
+);
 String RazorpayKey = 'rzp_test_GHq9Aq3Mdmd3cD';
 var cardDecoration = BoxDecoration(
     boxShadow: [
