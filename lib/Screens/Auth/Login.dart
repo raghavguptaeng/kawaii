@@ -184,6 +184,7 @@ class _LoginState extends State<Login> {
             controller: _phoneNumberController,
             decoration: InputDecoration(
                 labelText: "Phone Number",
+                fillColor: ksecColor,
                 labelStyle: TextStyle(fontSize: 25),
                 hintText: "Enter your phone number",
                 border: OutlineInputBorder()),
@@ -201,6 +202,7 @@ class _LoginState extends State<Login> {
               decoration: InputDecoration(
                   labelText: "OTP",
                   labelStyle: TextStyle(fontSize: 25),
+                  fillColor: ksecColor,
                   hintText: "Enter your OTP",
                   border: OutlineInputBorder()),
             ),
