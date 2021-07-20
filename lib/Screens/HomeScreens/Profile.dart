@@ -3,6 +3,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:kawaii/Screens/Auth/Login.dart';
+import 'package:kawaii/Screens/User/AddorEditAddress.dart';
+import 'package:kawaii/Screens/User/orders.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../constants.dart';
@@ -26,7 +28,7 @@ class _ProfileState extends State<Profile> {
           TopProfileSection(),
           GestureDetector(
             onTap: (){
-              //Navigator.pushNamed(context, Orders.id);
+              Navigator.pushNamed(context, Orders.id);
             },
             child: ProfileCards(
               name: "My Orders",
@@ -34,8 +36,8 @@ class _ProfileState extends State<Profile> {
           ),
           GestureDetector(
             onTap: () {
-              // Navigator.push(context,
-              //     MaterialPageRoute(builder: (context) => Address(add: false)));
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => Address(add: false)));
             },
             child: ProfileCards(
               name: "Shipping Addresses",
