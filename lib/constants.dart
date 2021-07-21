@@ -11,8 +11,10 @@ var subFontStyle = TextStyle(
     fontFamily: 'Metropolis'
 );
 var LoginColor = Color(0xFF7C6AD6);
-var ksecColor = Color(0xFFBADBEE);
-var klightBlue = Color(0xFF4E1A64);
+var ksecColor = Color(0xFFA99EFF);
+var kcolor1 = Color(0xFF7F77FE);
+var kcolor2 = Color(0xFFA573FF);
+var kbackColor = Color(0XFFF1F4FB);
 var ksmallFontStyle = TextStyle(
     color: Colors.white,
     fontSize: 20,
@@ -20,8 +22,9 @@ var ksmallFontStyle = TextStyle(
 );
 var ksmallFontStylewithStyle = TextStyle(
     color: Colors.black,
-    fontSize: 20,
-    fontFamily: 'subFont',
+    fontSize: 15,
+    fontWeight: FontWeight.w900,
+    fontFamily: 'lato',
     //fontWeight: FontWeight.bold
 );
 String RazorpayKey = 'rzp_test_GHq9Aq3Mdmd3cD';

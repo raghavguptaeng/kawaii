@@ -37,58 +37,61 @@ class _HomeScreenState extends State<HomeScreen> {
                 decoration: cardDecoration.copyWith(
                     borderRadius: BorderRadius.circular(0)),
                 padding: const EdgeInsets.all(8.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    GestureDetector(
-                      onTap: (){
-                        setState(() {
-                          navPos = 0;
-                        });
-                      },
-                      child: Icon(
-                        FontAwesomeIcons.home,
-                        color: (navPos == 0) ? LoginColor : Colors.grey,
-                        size: 25,
+                child: Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      GestureDetector(
+                        onTap: (){
+                          setState(() {
+                            navPos = 0;
+                          });
+                        },
+                        child: Icon(
+                          FontAwesomeIcons.home,
+                          color: (navPos == 0) ? LoginColor : Colors.grey,
+                          size: 25,
+                        ),
                       ),
-                    ),
-                    GestureDetector(
-                      onTap: (){
-                        setState(() {
-                          navPos = 1;
-                        });
-                      },
-                      child: Icon(
-                        FontAwesomeIcons.shoppingBag,
-                        color: (navPos == 1) ? LoginColor : Colors.grey,
-                        size: 25,
+                      GestureDetector(
+                        onTap: (){
+                          setState(() {
+                            navPos = 1;
+                          });
+                        },
+                        child: Icon(
+                          FontAwesomeIcons.shoppingBag,
+                          color: (navPos == 1) ? LoginColor : Colors.grey,
+                          size: 25,
+                        ),
                       ),
-                    ),
-                    GestureDetector(
-                      onTap: (){
-                        setState(() {
-                          navPos = 2;
-                        });
-                      },
-                      child: Icon(
-                        FontAwesomeIcons.solidHeart,
-                        color: (navPos == 2) ? LoginColor : Colors.grey,
-                        size: 25,
+                      GestureDetector(
+                        onTap: (){
+                          setState(() {
+                            navPos = 2;
+                          });
+                        },
+                        child: Icon(
+                          FontAwesomeIcons.solidHeart,
+                          color: (navPos == 2) ? LoginColor : Colors.grey,
+                          size: 25,
+                        ),
                       ),
-                    ),
-                    GestureDetector(
-                      onTap: (){
-                        setState(() {
-                          navPos = 3;
-                        });
-                      },
-                      child: Icon(
-                        FontAwesomeIcons.solidUser,
-                        color: (navPos == 3) ? LoginColor : Colors.grey,
-                        size: 25,
+                      GestureDetector(
+                        onTap: (){
+                          setState(() {
+                            navPos = 3;
+                          });
+                        },
+                        child: Icon(
+                          FontAwesomeIcons.solidUser,
+                          color: (navPos == 3) ? LoginColor : Colors.grey,
+                          size: 25,
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
             ),

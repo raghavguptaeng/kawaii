@@ -61,7 +61,7 @@ class Home extends StatelessWidget {
           builder: (context, snapshot) {
             var data = snapshot.data!.docs;
             return SizedBox(
-              height: MediaQuery.of(context).size.height * 0.35,
+              height: MediaQuery.of(context).size.height * 0.30,
               child: ListView.builder(
                 scrollDirection: Axis.horizontal,
                 itemCount: data.length,

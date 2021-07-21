@@ -36,7 +36,7 @@ class Orders extends StatelessWidget {
             child: StreamBuilder<QuerySnapshot>(
               stream: FirebaseFirestore.instance
                   .collection('orders')
-              .where('uid',isEqualTo: FirebaseAuth.instance.currentUser!.uid)
+                  .where('uid',isEqualTo: FirebaseAuth.instance.currentUser!.uid)
                   .snapshots(),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
@@ -55,12 +55,12 @@ class Orders extends StatelessWidget {
                     itemBuilder: (context, index) {
                       List items = data[index]['items'];
                       return OrderCard(
-                          id: data[index]['orderId'],
-                          qty: items.length,
-                          date: data[index]['date'],
-                          items: items,
-                          status: data[index]['status'],
-                          total: data[index]['total'],
+                        id: data[index]['orderId'],
+                        qty: items.length,
+                        date: data[index]['date'],
+                        items: items,
+                        status: data[index]['status'],
+                        total: data[index]['total'],
                         master: data[index],
                       );
                     },
@@ -108,9 +108,9 @@ class OrderCard extends StatelessWidget {
                       borderRadius: BorderRadius.circular(20)),
                   child: Center(
                       child: Text(
-                    'Details',
-                    style: subFontStyle.copyWith(color: Colors.black),
-                  )),
+                        'Details',
+                        style: subFontStyle.copyWith(color: Colors.black),
+                      )),
                 ),
               ),
               Text(
@@ -128,7 +128,7 @@ class OrderCard extends StatelessWidget {
     return SizedBox(
       width: MediaQuery.of(context).size.width * 0.95,
       child: Column(
-       // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        // mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(

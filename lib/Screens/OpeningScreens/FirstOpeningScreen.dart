@@ -26,22 +26,33 @@ class _FirstScreenState extends State<FirstScreen> {
     return Scaffold(
       backgroundColor: ksecColor,
       //todo:Add Logo and opening text
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              "Kawaii",
-              style: TextStyle(
-                fontSize: 150,
-                fontFamily: 'Fuggles',
-                //fontWeight: FontWeight.bold
-              ),
+      body: Stack(
+        children: [
+          Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    "Kawaii",
+                    style: TextStyle(
+                      fontSize: 150,
+                      fontFamily: 'Fuggles',
+                      //fontWeight: FontWeight.bold
+                    ),
+                  ),
+                  Text("By Draam Collection",style: LoginFontStyle.copyWith(fontSize: 20),)
+                ],
+              )
+          ),
+          SizedBox(
+            height: MediaQuery.of(context).size.height*1.2,
+            child: Align(
+              alignment: Alignment.center,
+              child: Image.asset('assets/Images/Splash.png'),
             ),
-            Text("By Draam Collection",style: LoginFontStyle.copyWith(fontSize: 20),)
-          ],
-        )
-      ),
+          )
+        ],
+      )
     );
   }
 }

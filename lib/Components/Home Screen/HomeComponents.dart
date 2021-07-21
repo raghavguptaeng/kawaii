@@ -1,5 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:kawaii/constants.dart';
 
 class BestSellerCard extends StatelessWidget {
@@ -12,7 +15,9 @@ class BestSellerCard extends StatelessWidget {
     return Center(
       child: Container(
         margin: EdgeInsets.all(10),
-        decoration: cardDecoration.copyWith(color: klightBlue),
+        decoration: cardDecoration.copyWith(
+          gradient: LinearGradient(colors: [kcolor1, kcolor2]),
+        ),
         height: MediaQuery.of(context).size.height * 0.25,
         width: MediaQuery.of(context).size.width * 0.95,
         child: Row(
@@ -36,7 +41,7 @@ class BestSellerCard extends StatelessWidget {
                       child: Text(
                         "Best Seller",
                         style: TextStyle(
-                            color: klightBlue, fontWeight: FontWeight.bold),
+                            color: ksecColor, fontWeight: FontWeight.bold),
                       ),
                     ),
                   ),
@@ -66,41 +71,67 @@ class ItemCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: cardDecoration,
+      //decoration: cardDecoration,
       width: MediaQuery.of(context).size.width * 0.4,
       margin: EdgeInsets.only(right: 20),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Center(
-            child: Container(
-              width:MediaQuery.of(context).size.width * 0.4,
-              height: MediaQuery.of(context).size.height * 0.2,
-              decoration: BoxDecoration(
-                color:Colors.grey[700],
-                borderRadius: BorderRadius.only(topLeft: Radius.circular(20),topRight: Radius.circular(20))
-              ),
-              child: Image.network(
-                data['ImageUrl'],
-                height: MediaQuery.of(context).size.height * 0.2,
-              ),
+          Container(
+            width: MediaQuery.of(context).size.width * 0.4,
+            height: MediaQuery.of(context).size.height * 0.25,
+            decoration: BoxDecoration(
+                color: kbackColor,
+              borderRadius: BorderRadius.circular(30)
             ),
+            child: Stack(
+              children: [
+                Center(
+                  child: Image.network(
+                    data['ImageUrl'],
+                    height: MediaQuery.of(context).size.height * 0.2,
+                  ),
+                ),
+                Align(
+                  alignment: Alignment.topRight,
+                  child: Padding(
+                    padding: const EdgeInsets.all(15.0),
+                    child: StreamBuilder<QuerySnapshot>(
+                      stream: FirebaseFirestore.instance.collection('User').doc(FirebaseAuth.instance.currentUser!.uid).collection('favorites').where('pid',isEqualTo: data.id).snapshots(),
+                      builder: (context,snapshot){
+                        if(snapshot.data!.docs.isEmpty){
+                          return GestureDetector(
+                              onTap: (){
+                                FirebaseFirestore.instance.collection('User').doc(FirebaseAuth.instance.currentUser!.uid).collection('favorites').doc(data.id).set({
+                                  'pid':data.id.toString(),
+                                  'Name':data['Name'],
+                                  'Image':data['ImageUrl'],
+                                  'Price':data['Price']
+                                });
+                              },
+                              child: Icon(FontAwesomeIcons.heart));
+                        }
+                        return GestureDetector(
+                            onTap: (){
+                              FirebaseFirestore.instance.collection('User').doc(FirebaseAuth.instance.currentUser!.uid).collection('favorites').doc(data.id).delete();
+                            },
+                            child: Icon(FontAwesomeIcons.solidHeart,color: Colors.red,));
+                      },
+                    ),
+                  ),
+                )
+              ],
+            )
           ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Text(
-              data['Name'],
-              style: ksmallFontStylewithStyle.copyWith(
-                  fontSize: 15, ),
-            ),
+          Text(
+            data['Name'],
+            style: ksmallFontStylewithStyle,
           ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Text(
-              data['Price'],
-              style: ksmallFontStylewithStyle.copyWith(
-                  fontSize: 15, ),
+          Text(
+            data['Price'],
+            style: ksmallFontStylewithStyle.copyWith(
+              color: Colors.grey,
             ),
           )
         ],
