@@ -15,9 +15,7 @@ class BestSellerCard extends StatelessWidget {
     return Center(
       child: Container(
         margin: EdgeInsets.all(10),
-        decoration: cardDecoration.copyWith(
-          gradient: LinearGradient(colors: [kcolor1, kcolor2]),
-        ),
+        decoration: cardDecoration,
         height: MediaQuery.of(context).size.height * 0.25,
         width: MediaQuery.of(context).size.width * 0.95,
         child: Row(

@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:kawaii/Screens/HomeScreens/Favorites.dart';
 import 'package:kawaii/Screens/HomeScreens/Home.dart';
 import 'package:kawaii/Screens/HomeScreens/Profile.dart';
 import 'package:kawaii/constants.dart';
@@ -26,7 +27,7 @@ class _HomeScreenState extends State<HomeScreen> {
               children: [
                 Home(),
                 Container(),
-                Container(),
+                Favorites(),
                 Profile()
               ],
             ),
@@ -34,8 +35,7 @@ class _HomeScreenState extends State<HomeScreen> {
               alignment: Alignment.bottomCenter,
               child: Container(
                 height: MediaQuery.of(context).size.height * 0.07,
-                decoration: cardDecoration.copyWith(
-                    borderRadius: BorderRadius.circular(0)),
+                color: Colors.white,
                 padding: const EdgeInsets.all(8.0),
                 child: Padding(
                   padding: const EdgeInsets.all(10.0),

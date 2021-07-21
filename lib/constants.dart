@@ -37,6 +37,6 @@ var cardDecoration = BoxDecoration(
         offset: Offset(0, 3), // changes position of shadow
       ),
     ],
-    color: Colors.white,
+    gradient: LinearGradient(colors: [kcolor1, kcolor2]),
     borderRadius: BorderRadius.circular(20)
 );
