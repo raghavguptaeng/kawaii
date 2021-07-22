@@ -1,64 +1,174 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:kawaii/constants.dart';
-class ProductCard extends StatelessWidget {
+class ProductCard extends StatefulWidget {
   ProductCard({this.img,required this.price,required this.name});
   var img;
   String name,price;
+
+  @override
+  _ProductCardState createState() => _ProductCardState();
+}
+
+class _ProductCardState extends State<ProductCard> {
+  int qty = 1;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(backgroundColor: ksecColor,),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            Stack(
-              children: [
-                Container(
-                  width: MediaQuery.of(context).size.width,
-                  height: MediaQuery.of(context).size.height*0.4,
-                  decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                      colors: [kcolor1,kcolor2],
-                    ),
-                  ),
-                  child: Image.network(img),
-                ),
-                Container(
-                  width: MediaQuery.of(context).size.width,
-                  height: MediaQuery.of(context).size.height,
-                  child: Align(
-                      alignment: Alignment.bottomCenter,
-                    child: Container(
-                      decoration: BoxDecoration(
-                          color: kbackColor,
-                          borderRadius: BorderRadius.only(topRight: Radius.circular(50),topLeft:  Radius.circular(50))
-                      ),
-                      width: MediaQuery.of(context).size.width,
-                      height: MediaQuery.of(context).size.height*0.65,
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Column(
-                          children: [
-                            SizedBox(height: 50,),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(name,style: LoginFontStyle.copyWith(color: LoginColor),),
-                                Text(price,style: LoginFontStyle,)
-                              ],
-                            )
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            )
-          ],
+      //appBar: AppBar(backgroundColor: ksecColor,),
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              Stack(
+                children: [
+                  ProdutImage(context),
+                  DetailsSetion(context),
+                  TopNavigation(context),
+                ],
+              )
+            ],
+          ),
         ),
       ),
     );
+  }
+
+  Container TopNavigation(BuildContext context) {
+    return Container(
+                  width: MediaQuery.of(context).size.width,
+                  height: MediaQuery.of(context).size.height,
+                  child: Align(
+                    alignment: Alignment.topCenter,
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          GestureDetector(
+                              onTap: ()=>Navigator.pop(context),
+                              child: Icon(CupertinoIcons.back,color: Colors.white,size: 50,)),
+                          Icon(FontAwesomeIcons.heart,)
+                        ],
+                      ),
+                    ),
+                  ),
+                );
+  }
+
+  Container ProdutImage(BuildContext context) {
+    return Container(
+                width: MediaQuery.of(context).size.width,
+                height: MediaQuery.of(context).size.height*0.4,
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: [kcolor1,kcolor2],
+                  ),
+                ),
+                child: Image.network(widget.img),
+              );
+  }
+
+  Container DetailsSetion(BuildContext context) {
+    return Container(
+                width: MediaQuery.of(context).size.width,
+                height: MediaQuery.of(context).size.height,
+                child: Align(
+                    alignment: Alignment.bottomCenter,
+                  child: Container(
+                    decoration: BoxDecoration(
+                        color: kbackColor,
+                        borderRadius: BorderRadius.only(topRight: Radius.circular(50),topLeft:  Radius.circular(50))
+                    ),
+                    width: MediaQuery.of(context).size.width,
+                    height: MediaQuery.of(context).size.height*0.65,
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Stack(
+                        children: [
+                          Container(
+                            width: MediaQuery.of(context).size.width,
+                            height: MediaQuery.of(context).size.height*0.65,
+                            child: Align(
+                              alignment: Alignment.bottomCenter,
+                              child: Container(
+                                margin: EdgeInsets.only(bottom: 30),
+                                width: MediaQuery.of(context).size.width*0.8,
+                                height: MediaQuery.of(context).size.height*0.08,
+                                decoration: BoxDecoration(
+                                  color: LoginColor,
+                                  borderRadius: BorderRadius.circular(50),
+                                ),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                  children: [
+                                    Icon(CupertinoIcons.bag,color: Colors.white,),
+                                    Text("Add To Cart",style:ksmallFontStyle.copyWith(color: Colors.white
+                                    ),)
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            //mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              SizedBox(height: 50,),
+                              Center(
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(widget.name,style: LoginFontStyle.copyWith(color: LoginColor),),
+                                    Text(widget.price,style: LoginFontStyle,),
+                                  ],
+                                ),
+                              ),
+                              SizedBox(height: 15,),
+                              Container(
+                                width:MediaQuery.of(context).size.width*0.25 ,
+                                decoration: BoxDecoration(
+                                    border: Border.all(
+                                        width: 1
+                                    )
+                                ),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    GestureDetector(
+                                      onTap: (){
+                                        setState(() {
+                                          qty++;
+                                        });
+                                      },
+                                      child: Container(
+                                        child: Icon(CupertinoIcons.add),
+                                      ),
+                                    ),
+                                    Text(qty.toString(),style: ksmallFontStylewithStyle,),
+                                    GestureDetector(
+                                      onTap: (){
+                                        if(qty>1){
+                                          setState(() {
+                                            qty--;
+                                          });
+                                        }
+                                      },
+                                      child: Container(
+                                        child: Icon(CupertinoIcons.minus),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              )
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              );
   }
 }
