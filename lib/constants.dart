@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 var LoginFontStyle = TextStyle(
-  fontSize: 34,
+  fontSize: 25,
   fontWeight: FontWeight.w900,
   fontFamily: 'Metropolis',
 );
@@ -39,4 +39,8 @@ var cardDecoration = BoxDecoration(
     ],
     gradient: LinearGradient(colors: [kcolor1, kcolor2]),
     borderRadius: BorderRadius.circular(20)
+);
+var ksubCard = BoxDecoration(
+    color:ksecColor ,
+    borderRadius: BorderRadius.circular(30)
 );

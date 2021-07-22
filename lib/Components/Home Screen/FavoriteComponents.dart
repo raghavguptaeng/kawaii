@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -21,7 +22,7 @@ class FavoriteCard extends StatelessWidget {
       height: MediaQuery.of(context).size.height*0.15,
       decoration: BoxDecoration(
         color: kbackColor,
-        borderRadius: BorderRadius.circular(30),
+        borderRadius: BorderRadius.circular(20),
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -38,7 +39,12 @@ class FavoriteCard extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                Icon(FontAwesomeIcons.trash,color: Colors.red,),
+                GestureDetector(
+                    child: Icon(FontAwesomeIcons.trash,color: Colors.red,),
+                  onTap: (){
+                    FirebaseFirestore.instance.collection('User').doc(FirebaseAuth.instance.currentUser!.uid).collection('favorites').doc(data.id).delete();
+                  },
+                ),
                 Text(data['Price'],style: ksmallFontStylewithStyle,),
                 Icon(CupertinoIcons.right_chevron),
               ],
