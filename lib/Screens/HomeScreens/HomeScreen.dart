@@ -6,6 +6,8 @@ import 'package:kawaii/Screens/HomeScreens/Home.dart';
 import 'package:kawaii/Screens/HomeScreens/Profile.dart';
 import 'package:kawaii/constants.dart';
 
+import 'Cart.dart';
+
 class HomeScreen extends StatefulWidget {
   static String id = '/homeScreen';
   const HomeScreen({Key? key}) : super(key: key);
@@ -26,7 +28,7 @@ class _HomeScreenState extends State<HomeScreen> {
               index: navPos,
               children: [
                 Home(),
-                Container(),
+                Cart(),
                 Favorites(),
                 Profile()
               ],

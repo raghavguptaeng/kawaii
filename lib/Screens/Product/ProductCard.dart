@@ -48,7 +48,7 @@ class _ProductCardState extends State<ProductCard> {
                         children: [
                           GestureDetector(
                               onTap: ()=>Navigator.pop(context),
-                              child: Icon(CupertinoIcons.back,color: Colors.white,size: 50,)),
+                              child: Icon(CupertinoIcons.back,size: 50,)),
                           Icon(FontAwesomeIcons.heart,)
                         ],
                       ),
@@ -62,9 +62,10 @@ class _ProductCardState extends State<ProductCard> {
                 width: MediaQuery.of(context).size.width,
                 height: MediaQuery.of(context).size.height*0.4,
                 decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    colors: [kcolor1,kcolor2],
-                  ),
+                  color: Color(0xFFF1F4FB)
+                  // gradient: LinearGradient(
+                  //   colors: [kcolor1,kcolor2],
+                  // ),
                 ),
                 child: Image.network(widget.img),
               );
@@ -78,7 +79,7 @@ class _ProductCardState extends State<ProductCard> {
                     alignment: Alignment.bottomCenter,
                   child: Container(
                     decoration: BoxDecoration(
-                        color: kbackColor,
+                        color: Colors.white,
                         borderRadius: BorderRadius.only(topRight: Radius.circular(50),topLeft:  Radius.circular(50))
                     ),
                     width: MediaQuery.of(context).size.width,

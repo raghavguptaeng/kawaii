@@ -40,7 +40,7 @@ class FavoriteCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 GestureDetector(
-                    child: Icon(FontAwesomeIcons.trash,color: Colors.red,),
+                  child: Icon(FontAwesomeIcons.trash,color: Colors.red,),
                   onTap: (){
                     FirebaseFirestore.instance.collection('User').doc(FirebaseAuth.instance.currentUser!.uid).collection('favorites').doc(data.id).delete();
                   },

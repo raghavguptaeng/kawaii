@@ -1,33 +1,24 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:kawaii/Components/Home%20Screen/CartComponents.dart';
 import 'package:kawaii/Components/Home%20Screen/FavoriteComponents.dart';
-import 'package:kawaii/constants.dart';
 
-class Favorites extends StatefulWidget {
-  const Favorites({Key? key}) : super(key: key);
+import '../../constants.dart';
 
-  @override
-  _FavoritesState createState() => _FavoritesState();
-}
-
-class _FavoritesState extends State<Favorites> {
+class Cart extends StatelessWidget {
   bool isEmpty = false;
-
   @override
   Widget build(BuildContext context) {
     return Container(
       height: MediaQuery.of(context).size.height,
       width: MediaQuery.of(context).size.width,
       color: Colors.white,
-      // decoration: cardDecoration.copyWith(borderRadius: BorderRadius.circular(0)),
-      child:Column(
+      child: Column(
         children: [
           Text('Favorites',style: LoginFontStyle,),
           StreamBuilder<QuerySnapshot>(
-            stream:FirebaseFirestore.instance.collection('User').doc(FirebaseAuth.instance.currentUser!.uid).collection('favorites').snapshots(),
+            stream:FirebaseFirestore.instance.collection('User').doc(FirebaseAuth.instance.currentUser!.uid).collection('cart').snapshots(),
             builder: (context,snapshot){
               var data = snapshot.data!.docs;
               if(data.length==0){
@@ -53,43 +44,25 @@ class _FavoritesState extends State<Favorites> {
                   itemCount: data.length,
                   physics: BouncingScrollPhysics(),
                   itemBuilder: (context,index){
-                    return FavoriteCard(data: data[index]);
+                    return CartCard(data: data[index]);
                   },
                 ),
               );
             },
           ),
           StreamBuilder<QuerySnapshot>(
-            stream:FirebaseFirestore.instance.collection('User').doc(FirebaseAuth.instance.currentUser!.uid).collection('favorites').snapshots(),
+            stream:FirebaseFirestore.instance.collection('User').doc(FirebaseAuth.instance.currentUser!.uid).collection('cart').snapshots(),
             builder: (context,snapshot){
               var data = snapshot.data!.docs;
               if(data.length==0){
                 return Container();
               }
               isEmpty = false;
-              return GestureDetector(
-                onTap: (){
-                  FirebaseFirestore.instance.collection('User').doc(FirebaseAuth.instance.currentUser!.uid).collection('favorites').get().then((snapshot){
-                    var data = snapshot.docs;
-                    for(int i=0 ; i<data.length ; ++i){
-                      FirebaseFirestore.instance.collection('User').doc(FirebaseAuth.instance.currentUser!.uid).collection('cart').doc(data[i].id).set(
-                        {
-                          'pid':data[i]['pid'],
-                          'Price':data[i]['Price'],
-                          'Name':data[i]['Name'],
-                          'qty':"1",
-                          'Image':data[i]['Image']
-                        }
-                      );
-                    }
-                  });
-                },
-                child: Container(
-                  decoration: ksubCard,
-                  width: MediaQuery.of(context).size.width*0.8,
-                  height: MediaQuery.of(context).size.height*0.1,
-                  child: Center(child: Text("ADD ALL TO CART",style: LoginFontStyle.copyWith(color: Colors.white),)),
-                ),
+              return Container(
+                decoration: ksubCard,
+                width: MediaQuery.of(context).size.width*0.8,
+                height: MediaQuery.of(context).size.height*0.1,
+                child: Center(child: Text("ADD ALL TO CART",style: LoginFontStyle.copyWith(color: Colors.white),)),
               );
             },
           )
@@ -98,5 +71,3 @@ class _FavoritesState extends State<Favorites> {
     );
   }
 }
-
-
