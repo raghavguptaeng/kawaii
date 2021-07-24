@@ -15,6 +15,8 @@ var ksecColor = Color(0xFFA99EFF);
 var kcolor1 = Color(0xFF7F77FE);
 var kcolor2 = Color(0xFFA573FF);
 var kbackColor = Color(0XFFF1F4FB);
+var kPurpleDark = Color(0xFF472CB6);
+var kPurpleLight = Color(0xFF6342E8);
 var ksmallFontStyle = TextStyle(
     color: Colors.white,
     fontSize: 20,

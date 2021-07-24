@@ -63,7 +63,6 @@ class BestSellerCard extends StatelessWidget {
     );
   }
 }
-
 class ItemCard extends StatelessWidget {
   var data;
   ItemCard({this.data});
