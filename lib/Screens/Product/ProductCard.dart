@@ -1,12 +1,13 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:kawaii/constants.dart';
 class ProductCard extends StatefulWidget {
-  ProductCard({this.img,required this.price,required this.name});
+  ProductCard({required this.id,this.img,required this.price,required this.name});
   var img;
-  String name,price;
-
+  String name,price,id;
   @override
   _ProductCardState createState() => _ProductCardState();
 }
@@ -93,21 +94,35 @@ class _ProductCardState extends State<ProductCard> {
                             height: MediaQuery.of(context).size.height*0.65,
                             child: Align(
                               alignment: Alignment.bottomCenter,
-                              child: Container(
-                                margin: EdgeInsets.only(bottom: 30),
-                                width: MediaQuery.of(context).size.width*0.8,
-                                height: MediaQuery.of(context).size.height*0.08,
-                                decoration: BoxDecoration(
-                                  color: LoginColor,
-                                  borderRadius: BorderRadius.circular(50),
-                                ),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                  children: [
-                                    Icon(CupertinoIcons.bag,color: Colors.white,),
-                                    Text("Add To Cart",style:ksmallFontStyle.copyWith(color: Colors.white
-                                    ),)
-                                  ],
+                              child: GestureDetector(
+                                onTap: (){
+                                  FirebaseFirestore.instance.collection('User').doc(FirebaseAuth.instance.currentUser!.uid).collection('cart').doc().set(
+                                    {
+                                      'Image':widget.img,
+                                      'Price':widget.price,
+                                      'pid':widget.id,
+                                      'qty':qty.toString(),
+                                      'Name':widget.name
+                                    }
+                                  );
+                                  Navigator.pop(context);
+                                },
+                                child: Container(
+                                  margin: EdgeInsets.only(bottom: 30),
+                                  width: MediaQuery.of(context).size.width*0.8,
+                                  height: MediaQuery.of(context).size.height*0.08,
+                                  decoration: BoxDecoration(
+                                    color: LoginColor,
+                                    borderRadius: BorderRadius.circular(50),
+                                  ),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                    children: [
+                                      Icon(CupertinoIcons.bag,color: Colors.white,),
+                                      Text("Add To Cart",style:ksmallFontStyle.copyWith(color: Colors.white
+                                      ),)
+                                    ],
+                                  ),
                                 ),
                               ),
                             ),

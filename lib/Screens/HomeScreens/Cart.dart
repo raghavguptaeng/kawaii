@@ -86,55 +86,203 @@ class Cart extends StatelessWidget {
     );
   }
 
-  Container checkoutButton(BuildContext context) {
-    return Container(
-              decoration: ksubCard.copyWith(color: kPurpleLight),
-              width: MediaQuery.of(context).size.width * 0.9,
-              height: MediaQuery.of(context).size.height * 0.08,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Container(),
-                  Row(
+  GestureDetector checkoutButton(BuildContext context) {
+    return GestureDetector(
+      onTap: () => CheckoutModalSheet(context),
+      child: Container(
+        decoration: ksubCard.copyWith(color: kPurpleLight),
+        width: MediaQuery.of(context).size.width * 0.9,
+        height: MediaQuery.of(context).size.height * 0.08,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Container(),
+            Row(
+              children: [
+                Text(
+                  "Checkout",
+                  style: ksmallFontStyle.copyWith(
+                      color: Colors.white, fontSize: 15),
+                ),
+                Icon(
+                  CupertinoIcons.right_chevron,
+                  color: Colors.white,
+                ),
+              ],
+            ),
+            Container(
+              width: MediaQuery.of(context).size.width * 0.15,
+              height: MediaQuery.of(context).size.height * 0.05,
+              child: Center(
+                child: StreamBuilder<QuerySnapshot>(
+                  stream: FirebaseFirestore.instance
+                      .collection('User')
+                      .doc(FirebaseAuth.instance.currentUser!.uid)
+                      .collection('cart')
+                      .snapshots(),
+                  builder: (context, snapshot) {
+                    amount = 0;
+                    var data = snapshot.data!.docs;
+                    for (int i = 0; i < data.length; ++i) {
+                      int qty = int.parse(data[i]['qty']);
+                      int price = int.parse(
+                          data[i]['Price'].toString().replaceAll('₹', ''));
+                      amount += (qty * price);
+                    }
+                    return Text(
+                      amount.toString() + " ₹",
+                      style: TextStyle(color: Colors.white),
+                    );
+                  },
+                ),
+              ),
+              decoration: BoxDecoration(
+                  color: kPurpleDark, borderRadius: BorderRadius.circular(5)),
+            )
+          ],
+        ),
+      ),
+    );
+  }
+
+  void CheckoutModalSheet(BuildContext context) {
+    showModalBottomSheet(
+      backgroundColor: kbackColor,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(30.0),
+      ),
+        context: context,
+        builder: (context) {
+          return Container(
+            width: MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.height*0.5,
+            child: Column(
+              children: [
+                ModalTopSection(context),
+                AddressSection(context),
+                PromoCode(context),
+                TotalCost(context),
+                TermsCard(context),
+                Container(
+                  width: MediaQuery.of(context).size.width*0.9,
+                  height: MediaQuery.of(context).size.height*0.08,
+                  decoration: ksubCard.copyWith(color: kPurpleLight),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text(
-                        "Checkout",
-                        style: ksmallFontStyle.copyWith(
-                            color: Colors.white, fontSize: 15),
-                      ),
-                      Icon(
-                        CupertinoIcons.right_chevron,
-                        color: Colors.white,
-                      ),
+                      Icon(FontAwesomeIcons.truck,color: Colors.white,),
+                      SizedBox(width: 20,),
+                      Text("PLACE ORDER",style: ksmallFontStylewithStyle.copyWith(color: Colors.white),)
                     ],
                   ),
-                  Container(
-                    width: MediaQuery.of(context).size.width * 0.15,
-                    height: MediaQuery.of(context).size.height * 0.05,
-                    child: Center(
-                        child: StreamBuilder<QuerySnapshot>(
-                          stream: FirebaseFirestore.instance.collection('User').doc(FirebaseAuth.instance.currentUser!.uid).collection('cart').snapshots(),
-                          builder: (context,snapshot){
-                            amount = 0;
-                            var data = snapshot.data!.docs;
-                            for(int i=0 ; i<data.length ; ++i){
-                              int qty = int.parse(data[i]['qty']);
-                              int price = int.parse(data[i]['Price'].toString().replaceAll('₹', ''));
-                              amount+=(qty*price);
-                            }
-                            return Text(
-                              amount.toString()+" ₹",
-                              style: TextStyle(color: Colors.white),
-                            );
-                          },
-                        ),),
-                    decoration: BoxDecoration(
-                        color: kPurpleDark,
-                        borderRadius: BorderRadius.circular(5)),
-                  )
-                ],
-              ),
-            );
+                )
+              ],
+            ),
+          );
+        },);
+  }
+
+  Center TermsCard(BuildContext context) {
+    return Center(
+                child: Container(
+                  width: MediaQuery.of(context).size.width*0.7,
+                  height: MediaQuery.of(context).size.height*0.08,
+                  child: Center(
+                    child: Text("By Placing an Order you agree to our Terms And Conditions",style: TextStyle(
+                      color: Colors.grey
+                    ),),
+                  ),
+                ),
+              );
+  }
+
+  Container AddressSection(BuildContext context) {
+    return Container(
+                width: MediaQuery.of(context).size.width*0.9,
+                height: MediaQuery.of(context).size.height*0.08,
+                decoration: BoxDecoration(
+                  border:Border(
+                    bottom: BorderSide(width: 1.5,color: Colors.grey.shade300),
+                  ),
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text('Address',style: ksmallFontStylewithStyle.copyWith(color: Colors.black),),
+                    Row(
+                      children: [
+                        Text('Select Address',style: ksmallFontStylewithStyle.copyWith(color: kcolor1,),),
+                        Icon(CupertinoIcons.right_chevron,color: kcolor1,)
+                      ],
+                    )
+                  ],
+                ),
+              );
+  }
+  Container PromoCode(BuildContext context) {
+    return Container(
+      width: MediaQuery.of(context).size.width*0.9,
+      height: MediaQuery.of(context).size.height*0.08,
+      decoration: BoxDecoration(
+        border:Border(
+          bottom: BorderSide(width: 1.5,color: Colors.grey.shade300),
+        ),
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text('Promo Code',style: ksmallFontStylewithStyle.copyWith(color: Colors.black),),
+          Row(
+            children: [
+              Text('Pick Discount',style: ksmallFontStylewithStyle.copyWith(color: kcolor1,),),
+              Icon(CupertinoIcons.right_chevron,color: kcolor1,)
+            ],
+          )
+        ],
+      ),
+    );
+  }
+  Container TotalCost(BuildContext context) {
+    return Container(
+      width: MediaQuery.of(context).size.width*0.9,
+      height: MediaQuery.of(context).size.height*0.08,
+      decoration: BoxDecoration(
+        border:Border(
+          bottom: BorderSide(width: 1.5,color: Colors.grey.shade300),
+        ),
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text('Total Cost',style: ksmallFontStylewithStyle.copyWith(color: Colors.black),),
+          Text(amount.toString()+" ₹",style: ksmallFontStylewithStyle.copyWith(color: kcolor1,),)
+        ],
+      ),
+    );
+  }
+
+  Container ModalTopSection(BuildContext context) {
+    return Container(
+                width: MediaQuery.of(context).size.width,
+                height: MediaQuery.of(context).size.height*0.08,
+                padding: const EdgeInsets.all(8.0),
+                decoration: BoxDecoration(
+                  border:Border(
+                    bottom: BorderSide(width: 1.5,color: Colors.grey.shade300),
+                  ),
+                ),
+                child: Center(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text("Checkout",style: ksmallFontStyle.copyWith(color: Colors.black),),
+                      GestureDetector(
+                          onTap:()=>Navigator.pop(context),
+                          child: Icon(Icons.cancel_outlined,color: Colors.grey,))
+                    ],
+                  ),
+                ),
+              );
   }
 }

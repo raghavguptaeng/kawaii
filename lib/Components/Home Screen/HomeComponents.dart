@@ -70,7 +70,7 @@ class ItemCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: (){
-        Navigator.push(context, MaterialPageRoute(builder: (context)=>ProductCard(img: data['ImageUrl'], name: data['Name'],price: data['Price'],)));
+        Navigator.push(context, MaterialPageRoute(builder: (context)=>ProductCard(id: data.id,img: data['ImageUrl'], name: data['Name'],price: data['Price'],)));
       },
       child: Container(
         //decoration: cardDecoration,
