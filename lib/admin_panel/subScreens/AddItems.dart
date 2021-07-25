@@ -27,6 +27,7 @@ class _AddItemsState extends State<AddItems> {
   String price = '';
   String imgUrl = '';
   bool onDiscount = false;
+  bool isPopular = false;
   var pickedImage;
   uploadToStorage() {
     InputElement input = FileUploadInputElement() as InputElement
@@ -166,6 +167,27 @@ class _AddItemsState extends State<AddItems> {
                 ),
               ],
             ),
+            Container(
+                width: MediaQuery.of(context).size.width*0.3,
+                child: Row(
+                  children: [
+                    Text("Is Popular   ",style: TextStyle(
+                        color: Colors.black45,
+                        letterSpacing: 1.2,
+                        fontSize: 20,
+                        fontWeight: FontWeight.w500),),
+                    CupertinoSwitch(
+                      onChanged: (value){
+                        setState(() {
+                          isPopular = !isPopular;
+                        });
+                      },
+                      value: isPopular,
+                      trackColor: Colors.red,
+                    ),
+                  ],
+                )
+            ),
             Visibility(
               visible: onDiscount,
               child: Row(
@@ -209,33 +231,9 @@ class _AddItemsState extends State<AddItems> {
       ),
     );
   }
-// child: TextFormField(
-  //   decoration: InputDecoration(
-  //     border: new OutlineInputBorder(
-  //         borderSide: new BorderSide(color: Colors.teal)),
-  //     labelText: 'Discount',
-  //     labelStyle: TextStyle(
-  //         color: Colors.black45,
-  //         letterSpacing: 1.2,
-  //         fontSize: 20,
-  //         fontWeight: FontWeight.w500),
-  //   ),
-  //   onChanged: (text) {
-  //     discount = text;
-  //   },
-  //   style: TextStyle(
-  //     //fontSize: 1 * SizeConfig.heightMultiplier,
-  //       fontWeight: FontWeight.w400),
-  // ),
   GestureDetector AddProductButton(BuildContext context) {
     return GestureDetector(
             onTap: () async{
-              // if(pickedImage!=null) {
-              //   final _firebaseStorage = FirebaseStorage.instance;
-              //   var snapshot = await _firebaseStorage
-              //       .ref()
-              //       .putFile(pickedImage);
-              //   var downloadUrl = await snapshot.ref.getDownloadURL();
                 FirebaseFirestore.instance.collection('Items').doc().set({
                   'Name': name,
                   'PriceBefore': price + ' ₹',
@@ -246,7 +244,9 @@ class _AddItemsState extends State<AddItems> {
                   'ImageUrl':imgUrl,
                   'isNew': true,
                   'onDiscount': onDiscount,
-                  'Category': cat
+                  'Category': cat,
+                  'isPopular':isPopular,
+                  'outOfStock':false,
                 });
               //}
               Navigator.pop(context);

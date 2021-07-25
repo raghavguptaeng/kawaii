@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -33,7 +34,10 @@ class Products extends StatelessWidget {
                           priceAfter: data[index]['Price'],
                           priceBefore: data[index]['PriceBefore'],
                           discount: data[index]['TotalDiscount'],
-                          pcode:data[index].id
+                          pcode:data[index].id,
+                        onDiscount: data[index]['onDiscount'],
+                        isPopular: data[index]['isPopular'],
+                        isOutOfStock: data[index]['outOfStock'],
                       );
                     }
                 ),
@@ -59,46 +63,151 @@ class Products extends StatelessWidget {
 }
 
 class PromoCard extends StatelessWidget {
-  PromoCard({required this.discount,required this.name, required this.pcode, required this.category, required this.priceAfter, required this.priceBefore});
+  PromoCard({required this.isPopular,required this.isOutOfStock,required this.discount,required this.name, required this.pcode,required this.onDiscount, required this.category, required this.priceAfter, required this.priceBefore});
   final String name,category,discount,priceAfter,priceBefore,pcode;
+  bool onDiscount;
+  bool isPopular;
+  bool isOutOfStock ;
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.all(20),
-      decoration: kBoxDecoration,
-      width: MediaQuery.of(context).size.width*0.4,
-      height: MediaQuery.of(context).size.height*0.2,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [
-          Column(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              Text("Name: "+name),
-              Text("Category: "+category)
-            ],
-          ),
-          Column(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              Text("total Discount: "+discount+" %"),
-              Text("Amount: "+priceAfter)
-            ],
-          ),
-          Column(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              GestureDetector(
-                onTap: (){
-                  FirebaseFirestore.instance.collection('Items').doc(pcode).delete();
+    if(onDiscount == true) {
+      return Container(
+        margin: EdgeInsets.all(20),
+        decoration: kBoxDecoration,
+        width: MediaQuery.of(context).size.width * 0.4,
+        height: MediaQuery.of(context).size.height * 0.2,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [Text("Name: " + name), Text("Category: " + category)],
+            ),
+            Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Text("total Discount: " + discount + " %"),
+                Text("Amount: " + priceAfter)
+              ],
+            ),
+            Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Row(
+                  children: [
+                    Text("Make Popular"),
+                    CupertinoSwitch(value: true, onChanged: (value){
+
+                    }),
+                  ],
+                ),
+                Row(
+                  children: [
+                    Text("Out Of Stock"),
+                    CupertinoSwitch(value: true, onChanged: (value){
+
+                    }),
+                  ],
+                ),
+              ],
+            ),
+            Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                GestureDetector(
+                  onTap: () {
+                    FirebaseFirestore.instance
+                        .collection('Items')
+                        .doc(pcode)
+                        .delete();
+                  },
+                  child: Icon(
+                    FontAwesomeIcons.trash,
+                    color: Colors.red,
+                  ),
+                ),
+                Text("Price Before Discount: " + priceBefore)
+              ],
+            )
+          ],
+        ),
+      );
+    }
+    else{
+      return Container(
+        margin: EdgeInsets.all(20),
+        decoration: kBoxDecoration,
+        width: MediaQuery.of(context).size.width * 0.4,
+        height: MediaQuery.of(context).size.height * 0.2,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [Text("Name: " + name), Text("Category: " + category)],
+            ),
+            Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Text("Amount: " + priceAfter),
+                RaisedButton(onPressed: (){
+
                 },
-                child: Icon(FontAwesomeIcons.trash,color: Colors.red,),
-              ),
-              Text("Price Before Discount: "+priceBefore)
-            ],
-          )
-        ],
-      ),
-    );
+                child: Text("Add Discount"),
+                    color: Colors.blue,
+                )
+              ],
+            ),
+            Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Row(
+                  children: [
+                    Text("Make Popular"),
+                    CupertinoSwitch(value: isPopular, onChanged: (value){
+                      FirebaseFirestore.instance
+                          .collection('Items')
+                          .doc(pcode).update({
+                        'isPopular':value,
+                      })  ;
+                    }),
+                  ],
+                ),
+                Row(
+                  children: [
+                    Text("Out Of Stock"),
+                    CupertinoSwitch(value: isOutOfStock, onChanged: (value){
+                      FirebaseFirestore.instance
+                          .collection('Items')
+                          .doc(pcode).update({
+                        'outOfStock':value,
+                      })  ;
+                    }),
+                  ],
+                ),
+              ],
+            ),
+            Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                GestureDetector(
+                  onTap: () {
+                    FirebaseFirestore.instance
+                        .collection('Items')
+                        .doc(pcode)
+                        .delete();
+                  },
+                  child: Icon(
+                    FontAwesomeIcons.trash,
+                    color: Colors.red,
+                  ),
+                ),
+                // Text("Price Before Discount: " + priceBefore)
+              ],
+            )
+          ],
+        ),
+      );
+    }
   }
 }
