@@ -73,7 +73,9 @@ class PromoCard extends StatelessWidget {
     if(onDiscount == true) {
       return Container(
         margin: EdgeInsets.all(20),
-        decoration: kBoxDecoration,
+        decoration: kBoxDecoration.copyWith(
+          color: (isOutOfStock)?Colors.red:Colors.white,
+        ),
         width: MediaQuery.of(context).size.width * 0.4,
         height: MediaQuery.of(context).size.height * 0.2,
         child: Row(
@@ -96,16 +98,24 @@ class PromoCard extends StatelessWidget {
                 Row(
                   children: [
                     Text("Make Popular"),
-                    CupertinoSwitch(value: true, onChanged: (value){
-
+                    CupertinoSwitch(value: isPopular, onChanged: (value){
+                      FirebaseFirestore.instance
+                          .collection('Items')
+                          .doc(pcode).update({
+                        'isPopular':value,
+                      })  ;
                     }),
                   ],
                 ),
                 Row(
                   children: [
                     Text("Out Of Stock"),
-                    CupertinoSwitch(value: true, onChanged: (value){
-
+                    CupertinoSwitch(value: isOutOfStock, onChanged: (value){
+                      FirebaseFirestore.instance
+                          .collection('Items')
+                          .doc(pcode).update({
+                        'outOfStock':value,
+                      })  ;
                     }),
                   ],
                 ),
@@ -123,7 +133,7 @@ class PromoCard extends StatelessWidget {
                   },
                   child: Icon(
                     FontAwesomeIcons.trash,
-                    color: Colors.red,
+                    color: (isOutOfStock)?Colors.black:Colors.red,
                   ),
                 ),
                 Text("Price Before Discount: " + priceBefore)
@@ -136,7 +146,9 @@ class PromoCard extends StatelessWidget {
     else{
       return Container(
         margin: EdgeInsets.all(20),
-        decoration: kBoxDecoration,
+        decoration: kBoxDecoration.copyWith(
+          color: (isOutOfStock)?Colors.red:Colors.white,
+        ),
         width: MediaQuery.of(context).size.width * 0.4,
         height: MediaQuery.of(context).size.height * 0.2,
         child: Row(
@@ -199,7 +211,7 @@ class PromoCard extends StatelessWidget {
                   },
                   child: Icon(
                     FontAwesomeIcons.trash,
-                    color: Colors.red,
+                    color: (isOutOfStock)?Colors.black:Colors.red,
                   ),
                 ),
                 // Text("Price Before Discount: " + priceBefore)
