@@ -8,13 +8,13 @@ import 'package:kawaii/constants.dart';
 class Address extends StatelessWidget {
   bool add;
   Address({required this.add});
-  String name = 'Raghav Gupta';
+  String name = '';
   String address =
-      'pkt - B8, plot number 75/76 , first Floor , sector - 11 , rohini , Delhi';
-  String city = 'Delhi';
-  String state = 'Delhi';
-  String zip = "110085";
-  String number = '9582079619';
+      '';
+  String city = '';
+  String state = '';
+  String zip = "";
+  String number = '';
   @override
   Widget build(BuildContext context) {
     if (add) {
@@ -43,8 +43,6 @@ class Address extends StatelessWidget {
               children: [
                 Center(
                   child: Container(
-                    decoration: cardDecoration.copyWith(
-                        borderRadius: BorderRadius.zero),
                     padding: const EdgeInsets.all(8.0),
                     height: MediaQuery.of(context).size.height * 0.1,
                     width: MediaQuery.of(context).size.width * 0.8,
@@ -52,14 +50,15 @@ class Address extends StatelessWidget {
                       onChanged: (value) {
                         name = value;
                       },
-                      decoration: InputDecoration(labelText: "full name"),
+                      decoration: InputDecoration(labelText: "full name",
+                        border:  OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10.0),
+                        ),),
                     ),
                   ),
                 ),
                 Center(
                   child: Container(
-                    decoration: cardDecoration.copyWith(
-                        borderRadius: BorderRadius.zero),
                     padding: const EdgeInsets.all(8.0),
                     height: MediaQuery.of(context).size.height * 0.1,
                     width: MediaQuery.of(context).size.width * 0.8,
@@ -68,14 +67,15 @@ class Address extends StatelessWidget {
                       onChanged: (value) {
                         number = value;
                       },
-                      decoration: InputDecoration(labelText: "Phone Number"),
+                      decoration: InputDecoration(labelText: "Phone Number",
+                        border:  OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10.0),
+                        ),),
                     ),
                   ),
                 ),
                 Center(
                   child: Container(
-                    decoration: cardDecoration.copyWith(
-                        borderRadius: BorderRadius.zero),
                     padding: const EdgeInsets.all(8.0),
                     height: MediaQuery.of(context).size.height * 0.1,
                     width: MediaQuery.of(context).size.width * 0.8,
@@ -83,14 +83,16 @@ class Address extends StatelessWidget {
                       onChanged: (value) {
                         address = value;
                       },
-                      decoration: InputDecoration(labelText: "Address"),
+                      decoration: InputDecoration(labelText: "Address",
+
+                        border:  OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10.0),
+                        ),),
                     ),
                   ),
                 ),
                 Center(
                   child: Container(
-                    decoration: cardDecoration.copyWith(
-                        borderRadius: BorderRadius.zero),
                     padding: const EdgeInsets.all(8.0),
                     height: MediaQuery.of(context).size.height * 0.1,
                     width: MediaQuery.of(context).size.width * 0.8,
@@ -98,14 +100,17 @@ class Address extends StatelessWidget {
                       onChanged: (value) {
                         city = value;
                       },
-                      decoration: InputDecoration(labelText: "City"),
+                      decoration: InputDecoration(labelText: "City",
+                        border:  OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10.0),
+                        ),),
                     ),
                   ),
                 ),
                 Center(
                   child: Container(
-                    decoration: cardDecoration.copyWith(
-                        borderRadius: BorderRadius.zero),
+                    // decoration: cardDecoration.copyWith(
+                    //     borderRadius: BorderRadius.zero),
                     padding: const EdgeInsets.all(8.0),
                     height: MediaQuery.of(context).size.height * 0.1,
                     width: MediaQuery.of(context).size.width * 0.8,
@@ -114,14 +119,17 @@ class Address extends StatelessWidget {
                         state = value;
                       },
                       decoration:
-                          InputDecoration(labelText: "State/Province/Region"),
+                          InputDecoration(
+                            labelText: "State/Province/Region",
+                            border:  OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10.0),
+                            ),
+                          ),
                     ),
                   ),
                 ),
                 Center(
                   child: Container(
-                    decoration: cardDecoration.copyWith(
-                        borderRadius: BorderRadius.zero),
                     padding: const EdgeInsets.all(8.0),
                     height: MediaQuery.of(context).size.height * 0.1,
                     width: MediaQuery.of(context).size.width * 0.8,
@@ -132,6 +140,10 @@ class Address extends StatelessWidget {
                       },
                       decoration: InputDecoration(
                         labelText: "Zip Code",
+
+                        border:  OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10.0),
+                        ),
                       ),
                     ),
                   ),
@@ -159,21 +171,26 @@ class Address extends StatelessWidget {
                     )),
                   ),
                   onTap: () {
-                    FirebaseFirestore.instance
-                        .collection('User')
-                        .doc(FirebaseAuth.instance.currentUser!.uid)
-                        .collection('Address')
-                        .doc()
-                        .set({
-                      'name': name,
-                      'number': number,
-                      'address': address,
-                      'zip': zip,
-                      'state': state,
-                      'city': city,
-                      'isSelected':false,
-                    });
-                    Navigator.pop(context);
+                    if(name==''||number==''||address==''||zip==''||state==''||city==''){
+                      print('not Valid');
+                    }
+                    else{
+                      FirebaseFirestore.instance
+                          .collection('User')
+                          .doc(FirebaseAuth.instance.currentUser!.uid)
+                          .collection('Address')
+                          .doc()
+                          .set({
+                        'name': name,
+                        'number': number,
+                        'address': address,
+                        'zip': zip,
+                        'state': state,
+                        'city': city,
+                        'isSelected':false,
+                      });
+                      Navigator.pop(context);
+                    }
                   },
                 )
               ],
