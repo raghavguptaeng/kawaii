@@ -83,12 +83,31 @@ class _FavoritesState extends State<Favorites> {
                       );
                     }
                   });
+                  showDialog(context: context, builder:(context){
+                    return CustomDialogBox(title: 'Voila', descriptions: 'Items Added To Cart', text: 'Back', img: Image.asset('assets/Images/touch.png'));
+                  });
                 },
                 child: Container(
-                  decoration: ksubCard,
-                  width: MediaQuery.of(context).size.width*0.8,
-                  height: MediaQuery.of(context).size.height*0.1,
-                  child: Center(child: Text("ADD ALL TO CART",style: LoginFontStyle.copyWith(color: Colors.white),)),
+                  width: MediaQuery.of(context).size.width * 0.9,
+                  height: MediaQuery.of(context).size.height * 0.08,
+                  decoration: ksubCard.copyWith(color: kPurpleLight),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        "Add All To Cart",
+                        style: ksmallFontStylewithStyle.copyWith(
+                            color: Colors.white),
+                      ),
+                      SizedBox(
+                        width: 20,
+                      ),
+                      Icon(
+                        CupertinoIcons.add,
+                        color: Colors.white,
+                      ),
+                    ],
+                  ),
                 ),
               );
             },

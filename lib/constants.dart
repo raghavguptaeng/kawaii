@@ -29,6 +29,11 @@ var ksmallFontStylewithStyle = TextStyle(
     fontFamily: 'lato',
     //fontWeight: FontWeight.bold
 );
+class Constants{
+  Constants._();
+  static const double padding =20;
+  static const double avatarRadius =45;
+}
 String RazorpayKey = 'rzp_test_GHq9Aq3Mdmd3cD';
 var cardDecoration = BoxDecoration(
     boxShadow: [
