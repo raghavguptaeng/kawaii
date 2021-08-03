@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:kawaii/Screens/Auth/Login.dart';
 import 'package:kawaii/Screens/HomeScreens/HomeScreen.dart';
 import 'package:kawaii/Screens/OpeningScreens/FirstOpeningScreen.dart';
+import 'package:kawaii/Screens/Product/AllProducts.dart';
 import 'package:kawaii/Screens/User/orders.dart';
 
 void main() async {
@@ -21,7 +22,8 @@ class Init extends StatelessWidget {
         FirstScreen.id:(context)=>FirstScreen(),
         Login.id:(context)=>Login(),
         HomeScreen.id:(context)=>HomeScreen(),
-        Orders.id:(context)=>Orders()
+        Orders.id:(context)=>Orders(),
+        AllProducts.id:(context)=>AllProducts(),
       },
     );
   }

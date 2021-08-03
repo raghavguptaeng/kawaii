@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:kawaii/Components/Home%20Screen/HomeComponents.dart';
+import 'package:kawaii/Screens/Product/AllProducts.dart';
 import 'package:kawaii/constants.dart';
 
 class Home extends StatelessWidget {
@@ -25,7 +26,7 @@ class Home extends StatelessWidget {
             SizedBox(
               height: 15,
             ),
-            PopularDeals(),
+            PopularDeals(context),
             SizedBox(
               height: 15,
             ),
@@ -37,7 +38,7 @@ class Home extends StatelessWidget {
     );
   }
 
-  Column PopularDeals() {
+  Column PopularDeals(context) {
     return Column(
       children: [
         Row(
@@ -47,9 +48,14 @@ class Home extends StatelessWidget {
               "Popular Deals",
               style: ksmallFontStylewithStyle,
             ),
-            Text(
-              "See all",
-              style: TextStyle(color: Colors.grey),
+            GestureDetector(
+              onTap: (){
+                Navigator.pushNamed(context, AllProducts.id);
+              },
+              child: Text(
+                "See all",
+                style: TextStyle(color: Colors.grey),
+              ),
             ),
           ],
         ),
