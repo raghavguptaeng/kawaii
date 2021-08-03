@@ -62,6 +62,7 @@ class _OrderDetailsState extends State<OrderDetails> {
           SizedBox(
             height: MediaQuery.of(context).size.height*0.6,
             child: ListView.builder(
+              physics: BouncingScrollPhysics(),
               itemCount: widget.items.length,
               itemBuilder: (context,index){
                 var data = widget.items[index];
@@ -95,31 +96,6 @@ class _OrderDetailsState extends State<OrderDetails> {
                                 ),
                               ],
                             ),
-                          ),
-                          Row(
-                            children: [
-                              Text(
-                                "Color:",
-                                style: TextStyle(fontSize: 20),
-                              ),
-                              Text(
-                                data['color'],
-                                style:
-                                TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
-                              ),
-                              SizedBox(
-                                width: 30,
-                              ),
-                              Text(
-                                "Size:",
-                                style: TextStyle(fontSize: 20),
-                              ),
-                              Text(
-                                data['size'],
-                                style:
-                                TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
-                              )
-                            ],
                           ),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
