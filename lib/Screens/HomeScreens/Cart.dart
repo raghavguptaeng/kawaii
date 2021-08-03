@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
@@ -6,13 +8,126 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:kawaii/Components/Home%20Screen/CartComponents.dart';
 import 'package:kawaii/Components/Home%20Screen/FavoriteComponents.dart';
 import 'package:kawaii/Screens/User/AddorEditAddress.dart';
+import 'package:razorpay_flutter/razorpay_flutter.dart';
 
 import '../../constants.dart';
 
-class Cart extends StatelessWidget {
+class Cart extends StatefulWidget {
+  @override
+  _CartState createState() => _CartState();
+}
+
+class _CartState extends State<Cart> {
   bool isEmpty = false;
+
   int amount = 0;
+  var razorpay;
   String address = '';
+  String RazorpayId = '';
+  String phone = '';
+  String city = '',state = '';
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    FirebaseFirestore.instance.collection('Admin').doc('Details').get().then((value){
+      RazorpayId = value['Razorpay'];
+    });
+    razorpay = new Razorpay();
+    razorpay.on(Razorpay.EVENT_PAYMENT_SUCCESS, handlePaymentSuccess);
+    razorpay.on(Razorpay.EVENT_PAYMENT_ERROR, handlePaymentError);
+    razorpay.on(Razorpay.PAYMENT_CANCELLED.toString(), handlePaymentError);
+    razorpay.on(Razorpay.EVENT_EXTERNAL_WALLET, handleExternalWallet);
+  }
+  var _chars = 'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz1234567890';
+  Random _rnd = Random();
+  String month(int m){
+    if(m==1)
+      return 'January';
+    if(m==2)
+      return 'February';
+    if(m==3)
+      return 'March';
+    if(m==4)
+      return 'April';
+    if(m==5)
+      return "May";
+    if(m==6)
+      return 'June';
+    if(m==7)
+      return 'July';
+    if(m==8)
+      return 'August';
+    if(m==9)
+      return 'September';
+    if(m==10)
+      return 'October';
+    if(m==11)
+      return 'November';
+    return 'December';
+  }
+  String getRandomString(int length) => String.fromCharCodes(Iterable.generate(
+      length, (_) => _chars.codeUnitAt(_rnd.nextInt(_chars.length))));
+  void handlePaymentSuccess(PaymentSuccessResponse response) {
+    // print("Success");
+    FirebaseFirestore.instance.collection('User').doc(FirebaseAuth.instance.currentUser!.uid).collection('cart').get().then((snapshot) {
+      var ds = snapshot.docs;
+      var orderId = getRandomString(10);
+      var items = [];
+      for(int i=0 ; i<ds.length ; ++i){
+        items.add( {
+          'Name':ds[i]['Name'],
+          // 'color':ds[i]['color'],
+          'pid':ds[i]['pid'],
+          'price':ds[i]['Price'],
+          // 'size':ds[i]['size'],
+          'qty':ds[i]['qty'],
+          'ImageUrl':ds[i]['Image'],
+          'orderId':orderId,
+        });
+      }
+      FirebaseFirestore.instance.collection('orders').doc(orderId).set({
+        'uid':FirebaseAuth.instance.currentUser!.uid.toString(),
+        'total':amount.toString(),
+        'date':DateTime.now().day.toString()+'-'+month(DateTime.now().month)+'-'+DateTime.now().year.toString(),
+        'status':'order placed',
+        'orderId':orderId,
+        'items':items,
+        'address':address,
+        'phone':phone,
+        'city':city,
+        'state':state,
+      });
+    });
+    // Fluttertoast.showToast(msg: response.toString());
+    // Navigator.pushReplacementNamed(context, Success.id);
+  }
+
+  void handlePaymentError(PaymentSuccessResponse response) {
+    // Fluttertoast.showToast(msg: 'fail');
+    // Navigator.pushReplacementNamed(context, Faliure.id);
+    print("faliure");
+  }
+
+  void handleExternalWallet(PaymentSuccessResponse response) {
+    // Fluttertoast.showToast(msg: 'error');
+    // Navigator.pushReplacementNamed(context, Faliure.id);
+  }
+  void checkout() {
+    //todo:implement is finally
+    var options = {
+      'key': RazorpayId,//RazorpayKey,
+      'amount': amount * 100, //in the smallest currency sub-unit.
+      'external': {
+        'wallets': ['paytm']
+      }
+    };
+    try {
+      razorpay.open(options);
+    } catch (e) {
+      print("Error = " + e.toString());
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -87,7 +202,7 @@ class Cart extends StatelessWidget {
       ),
     );
   }
-  
+
   GestureDetector checkoutButton(BuildContext context) {
     return GestureDetector(
       onTap: () => CheckoutModalSheet(context),
@@ -147,12 +262,12 @@ class Cart extends StatelessWidget {
       ),
     );
   }
-  
+
   void CheckoutModalSheet(BuildContext context) {
     showModalBottomSheet(
       backgroundColor: kbackColor,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(30.0),
+        borderRadius: BorderRadius.only(topLeft: Radius.circular(30.0),topRight: Radius.circular(30.0)),
       ),
       context: context,
       builder: (context) {
@@ -166,26 +281,29 @@ class Cart extends StatelessWidget {
               PromoCode(context),
               TotalCost(context),
               TermsCard(context),
-              Container(
-                width: MediaQuery.of(context).size.width * 0.9,
-                height: MediaQuery.of(context).size.height * 0.08,
-                decoration: ksubCard.copyWith(color: kPurpleLight),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Icon(
-                      FontAwesomeIcons.truck,
-                      color: Colors.white,
-                    ),
-                    SizedBox(
-                      width: 20,
-                    ),
-                    Text(
-                      "PLACE ORDER",
-                      style: ksmallFontStylewithStyle.copyWith(
-                          color: Colors.white),
-                    )
-                  ],
+              GestureDetector(
+                onTap: checkout,
+                child: Container(
+                  width: MediaQuery.of(context).size.width * 0.9,
+                  height: MediaQuery.of(context).size.height * 0.08,
+                  decoration: ksubCard.copyWith(color: kPurpleLight),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(
+                        FontAwesomeIcons.truck,
+                        color: Colors.white,
+                      ),
+                      SizedBox(
+                        width: 20,
+                      ),
+                      Text(
+                        "PLACE ORDER",
+                        style: ksmallFontStylewithStyle.copyWith(
+                            color: Colors.white),
+                      )
+                    ],
+                  ),
                 ),
               )
             ],
@@ -194,7 +312,7 @@ class Cart extends StatelessWidget {
       },
     );
   }
-  
+
   Center TermsCard(BuildContext context) {
     return Center(
       child: Container(
@@ -241,6 +359,9 @@ class Cart extends StatelessWidget {
                       ),
                     );
                   address = snapshot.data!.docs[0]['address'];
+                  phone = snapshot.data!.docs[0]['number'];
+                  city = snapshot.data!.docs[0]['city'];
+                  state = snapshot.data!.docs[0]['state'];
                   return Text(
                     snapshot.data!.docs[0]['address'].toString().substring(0,20),
                     style: ksmallFontStylewithStyle.copyWith(
