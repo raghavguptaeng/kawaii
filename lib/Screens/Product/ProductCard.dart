@@ -61,7 +61,7 @@ class _ProductCardState extends State<ProductCard> {
   Container ProdutImage(BuildContext context) {
     return Container(
                 width: MediaQuery.of(context).size.width,
-                height: MediaQuery.of(context).size.height*0.4,
+                height: MediaQuery.of(context).size.height*0.7,
                 decoration: BoxDecoration(
                   color: Color(0xFFF1F4FB)
                   // gradient: LinearGradient(
@@ -84,7 +84,7 @@ class _ProductCardState extends State<ProductCard> {
                         borderRadius: BorderRadius.only(topRight: Radius.circular(50),topLeft:  Radius.circular(50))
                     ),
                     width: MediaQuery.of(context).size.width,
-                    height: MediaQuery.of(context).size.height*0.65,
+                    height: MediaQuery.of(context).size.height*0.35,
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Stack(
