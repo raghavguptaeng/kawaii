@@ -30,7 +30,7 @@ class Home extends StatelessWidget {
             SizedBox(
               height: 15,
             ),
-            ShopByCategory(),
+            ShopByCategory(context),
             SizedBox(height: 100,)
           ],
         ),
@@ -84,7 +84,7 @@ class Home extends StatelessWidget {
     );
   }
 
-  Column ShopByCategory() {
+  Column ShopByCategory(context) {
     return Column(
       children: [
         Row(
@@ -94,9 +94,14 @@ class Home extends StatelessWidget {
               "Shop By Category",
               style: ksmallFontStylewithStyle,
             ),
-            Text(
-              "See all",
-              style: TextStyle(color: Colors.grey),
+            GestureDetector(
+              onTap: (){
+                Navigator.pushNamed(context, AllProducts.id);
+              },
+              child: Text(
+                "See all",
+                style: TextStyle(color: Colors.grey),
+              ),
             ),
           ],
         ),

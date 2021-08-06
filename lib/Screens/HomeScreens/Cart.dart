@@ -278,7 +278,7 @@ class _CartState extends State<Cart> {
             children: [
               ModalTopSection(context),
               AddressSection(context),
-              PromoCode(context),
+              // PromoCode(context),
               TotalCost(context),
               TermsCard(context),
               GestureDetector(
