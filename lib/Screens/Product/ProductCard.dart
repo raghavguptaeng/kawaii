@@ -50,7 +50,28 @@ class _ProductCardState extends State<ProductCard> {
                           GestureDetector(
                               onTap: ()=>Navigator.pop(context),
                               child: Icon(CupertinoIcons.back,size: 50,)),
-                          Icon(FontAwesomeIcons.heart,)
+                          StreamBuilder<QuerySnapshot>(
+                            stream: FirebaseFirestore.instance.collection('User').doc(FirebaseAuth.instance.currentUser!.uid).collection('favorites').where('pid',isEqualTo: widget.id).snapshots(),
+                            builder: (context,snapshot){
+                              if(snapshot.data!.docs.isEmpty){
+                                return GestureDetector(
+                                    onTap: (){
+                                      FirebaseFirestore.instance.collection('User').doc(FirebaseAuth.instance.currentUser!.uid).collection('favorites').doc(widget.id).set({
+                                        'pid':widget.id,
+                                        'Name':widget.name,
+                                        'Image':widget.img,
+                                        'Price':widget.price
+                                      });
+                                    },
+                                    child: Icon(FontAwesomeIcons.heart));
+                              }
+                              return GestureDetector(
+                                  onTap: (){
+                                    FirebaseFirestore.instance.collection('User').doc(FirebaseAuth.instance.currentUser!.uid).collection('favorites').doc(widget.id).delete();
+                                  },
+                                  child: Icon(FontAwesomeIcons.solidHeart,color: Colors.red,));
+                            },
+                          )
                         ],
                       ),
                     ),
