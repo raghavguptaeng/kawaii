@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:kawaii/Components/Home%20Screen/HomeComponents.dart';
 import 'package:kawaii/Screens/Product/AllProducts.dart';
+import 'package:kawaii/Screens/Product/ProductsFilteredByCategory.dart';
 import 'package:kawaii/constants.dart';
 
 class Home extends StatelessWidget {
@@ -128,7 +129,9 @@ class Home extends StatelessWidget {
                           width: MediaQuery.of(context).size.width*0.3,
                           child: FloatingActionButton(
                             backgroundColor: Colors.white,
-                            onPressed: () => {},
+                            onPressed: () => {
+                              Navigator.push(context, MaterialPageRoute(builder: (context)=>CategoryItems(category: data[index]['Name'])))
+                            },
                             child: Image.network(data[index]['ImageUrl']),
                           ),
                         ),
