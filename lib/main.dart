@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:kawaii/admin_panel/subScreens/SpecialItemScreen.dart';
 
 import 'admin_panel/homeScreen.dart';
 import 'admin_panel/login_admin.dart';
@@ -55,6 +56,7 @@ class _MyAppState extends State<MyApp> {
                 HomeScreen.id :(context)=>HomeScreen(),
                 AddPromo.id : (context)=>AddPromo(),
                 AddItems.id : (context)=>AddItems(),
+                SpecialItems.id : (context)=>SpecialItems(),
               },
             );
           },

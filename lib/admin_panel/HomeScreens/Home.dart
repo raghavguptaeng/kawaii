@@ -1,6 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:kawaii/admin_panel/subScreens/SpecialItemScreen.dart';
 import 'package:kawaii/components/constantComponents.dart';
 import 'package:pie_chart/pie_chart.dart';
 
@@ -144,6 +146,17 @@ class Home extends StatelessWidget {
                       )
                     ],
                   ),
+                ),
+                GestureDetector(
+                  onTap: ()=>Navigator.pushNamed(context, SpecialItems.id),
+                  child: Container(
+                    width: MediaQuery.of(context).size.width*0.1,
+                    height: MediaQuery.of(context).size.height*0.1,
+                    decoration:kBoxDecoration.copyWith(
+                      color: Colors.purpleAccent
+                    ),
+                    child: Center(child: Text("Add New Special",textAlign: TextAlign.center,)),
+                  ),
                 )
               ],
             ),
@@ -152,4 +165,6 @@ class Home extends StatelessWidget {
       ),
     );
   }
+
+
 }

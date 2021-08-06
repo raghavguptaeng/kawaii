@@ -223,3 +223,59 @@ class PromoCard extends StatelessWidget {
     }
   }
 }
+
+class SpecialCard extends StatelessWidget {
+  SpecialCard({required this.isPopular,required this.isOutOfStock,required this.discount,required this.name, required this.pcode,required this.onDiscount, required this.category, required this.priceAfter, required this.priceBefore, required this.img});
+  final String name,category,discount,priceAfter,priceBefore,pcode,img;
+  bool onDiscount;
+  bool isPopular;
+  bool isOutOfStock ;
+  @override
+  Widget build(BuildContext context) {
+      return Container(
+        margin: EdgeInsets.all(20),
+        decoration: kBoxDecoration.copyWith(
+          color: (isOutOfStock)?Colors.red:Colors.white,
+        ),
+        width: MediaQuery.of(context).size.width * 0.4,
+        height: MediaQuery.of(context).size.height * 0.2,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            // Image.network(img),
+            Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [Text("Name: " + name), Text("Category: " + category)],
+            ),
+            Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Text("Amount: " + priceAfter),
+              ],
+            ),
+            Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Row(
+                  children: [
+                    Text("Make Popular"),
+                    RaisedButton(onPressed: (){
+                      FirebaseFirestore.instance.collection('Admin').doc('BestSeller').update({
+                        'Name':name,
+                        'Price':priceAfter,
+                        'pid':pcode,
+                        'img':img
+                      });
+                      Navigator.pop(context);
+                    },
+                    child: Text("Mark Special"),
+                    )
+                  ],
+                ),
+              ],
+            ),
+          ],
+        ),
+      );
+  }
+}
