@@ -22,7 +22,7 @@ class AddItems extends StatefulWidget {
 class _AddItemsState extends State<AddItems> {
 
   String name = '';
-  String cat = '';
+  String cat = 'Pins';
   String discount = '0';
   String price = '';
   String imgUrl = '';
@@ -95,28 +95,63 @@ class _AddItemsState extends State<AddItems> {
                         fontWeight: FontWeight.w400),
                   ),
                 ),
-                Container(
-                  width: MediaQuery.of(context).size.width*0.3,
-
-                  child: TextFormField(
-                    decoration: InputDecoration(
-                      border: new OutlineInputBorder(
-                          borderSide: new BorderSide(color: Colors.teal)),
-                      labelText: 'Product category',
-                      labelStyle: TextStyle(
-                          color: Colors.black45,
-                          letterSpacing: 1.2,
-                          fontSize: 20,
-                          fontWeight: FontWeight.w500),
-                    ),
-                    onChanged: (text) {
-                      cat = text;
-                    },
-                    style: TextStyle(
-                      //fontSize: 1 * SizeConfig.heightMultiplier,
-                        fontWeight: FontWeight.w400),
-                  ),
-                ),
+                StreamBuilder<QuerySnapshot>(
+                  stream: FirebaseFirestore.instance
+                      .collection('Category')
+                      .snapshots(),
+                  builder: (context, snapshot) {
+                    return DropdownButton<String>(
+                      focusColor: Colors.white,
+                      value: cat,
+                      //elevation: 5,
+                      style: TextStyle(color: Colors.white),
+                      iconEnabledColor: Colors.black,
+                      items: snapshot.data!.docs.toSet().map((e){
+                        return DropdownMenuItem<String>(
+                          value: e['Name'],
+                          child: Text(
+                            e['Name'],
+                            style: TextStyle(color: Colors.black),
+                          ),
+                        );
+                      }).toSet().toList(),
+                      hint: Text(
+                        "Color",
+                        style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 14,
+                            fontWeight: FontWeight.w500),
+                      ),
+                      onChanged: (value) {
+                        setState(() {
+                          cat = value!;
+                        });
+                      },
+                    );
+                  },
+                )
+                // Container(
+                //   width: MediaQuery.of(context).size.width*0.3,
+                //
+                //   child: TextFormField(
+                //     decoration: InputDecoration(
+                //       border: new OutlineInputBorder(
+                //           borderSide: new BorderSide(color: Colors.teal)),
+                //       labelText: 'Product category',
+                //       labelStyle: TextStyle(
+                //           color: Colors.black45,
+                //           letterSpacing: 1.2,
+                //           fontSize: 20,
+                //           fontWeight: FontWeight.w500),
+                //     ),
+                //     onChanged: (text) {
+                //       cat = text;
+                //     },
+                //     style: TextStyle(
+                //       //fontSize: 1 * SizeConfig.heightMultiplier,
+                //         fontWeight: FontWeight.w400),
+                //   ),
+                // ),
               ],
             ),
             Row(

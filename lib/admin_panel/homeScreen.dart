@@ -127,7 +127,7 @@ class _HomeScreenState extends State<HomeScreen> {
             child: IndexedStack(
               index: currentIndex,
               children: [
-                Home(),Orders(),Products(),Promo()
+                Home(),Orders(),Container(),Products(),Promo()
               ],
             ),
           )
