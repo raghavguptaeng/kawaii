@@ -5,6 +5,7 @@ import 'package:kawaii/Screens/HomeScreens/Favorites.dart';
 import 'package:kawaii/Screens/HomeScreens/Home.dart';
 import 'package:kawaii/Screens/HomeScreens/Profile.dart';
 import 'package:kawaii/constants.dart';
+import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
 
 import 'Cart.dart';
 
@@ -17,7 +18,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  int navPos = 0;
+  int _currentIndex = 0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,7 +26,7 @@ class _HomeScreenState extends State<HomeScreen> {
         child: Stack(
           children: [
             IndexedStack(
-              index: navPos,
+              index: _currentIndex,
               children: [
                 Home(),
                 Cart(),
@@ -33,72 +34,77 @@ class _HomeScreenState extends State<HomeScreen> {
                 Profile()
               ],
             ),
-            Align(
-              alignment: Alignment.bottomCenter,
-              child: Container(
-                height: MediaQuery.of(context).size.height * 0.07,
-                color: Colors.white,
-                padding: const EdgeInsets.all(8.0),
-                child: Padding(
-                  padding: const EdgeInsets.all(10.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      GestureDetector(
-                        onTap: (){
-                          setState(() {
-                            navPos = 0;
-                          });
-                        },
-                        child: Icon(
-                          FontAwesomeIcons.home,
-                          color: (navPos == 0) ? LoginColor : Colors.grey,
-                          size: 25,
-                        ),
-                      ),
-                      GestureDetector(
-                        onTap: (){
-                          setState(() {
-                            navPos = 1;
-                          });
-                        },
-                        child: Icon(
-                          FontAwesomeIcons.shoppingBag,
-                          color: (navPos == 1) ? LoginColor : Colors.grey,
-                          size: 25,
-                        ),
-                      ),
-                      GestureDetector(
-                        onTap: (){
-                          setState(() {
-                            navPos = 2;
-                          });
-                        },
-                        child: Icon(
-                          FontAwesomeIcons.solidHeart,
-                          color: (navPos == 2) ? LoginColor : Colors.grey,
-                          size: 25,
-                        ),
-                      ),
-                      GestureDetector(
-                        onTap: (){
-                          setState(() {
-                            navPos = 3;
-                          });
-                        },
-                        child: Icon(
-                          FontAwesomeIcons.solidUser,
-                          color: (navPos == 3) ? LoginColor : Colors.grey,
-                          size: 25,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ),
+            // Align(
+            //   alignment: Alignment.bottomCenter,
+            //   child: SalomonBottomBar(
+            //     currentIndex: _currentIndex,
+            //     onTap: (i) => setState(() => _currentIndex = i),
+            //     items: [
+            //       /// Home
+            //       SalomonBottomBarItem(
+            //         icon: Icon(Icons.home),
+            //         title: Text("Home"),
+            //         selectedColor: Colors.purple,
+            //       ),
+            //
+            //       /// Likes
+            //       SalomonBottomBarItem(
+            //         icon: Icon(Icons.favorite_border),
+            //         title: Text("Likes"),
+            //         selectedColor: Colors.pink,
+            //       ),
+            //
+            //       /// Search
+            //       SalomonBottomBarItem(
+            //         icon: Icon(Icons.search),
+            //         title: Text("Search"),
+            //         selectedColor: Colors.orange,
+            //       ),
+            //
+            //       /// Profile
+            //       SalomonBottomBarItem(
+            //         icon: Icon(Icons.person),
+            //         title: Text("Profile"),
+            //         selectedColor: Colors.teal,
+            //       ),
+            //     ],
+            //   ),
+            // ),
           ],
         ),
+      ),
+      bottomNavigationBar: SalomonBottomBar(
+        currentIndex: _currentIndex,
+        onTap: (i) => setState(() => _currentIndex = i),
+        items: [
+          /// Home
+          SalomonBottomBarItem(
+            icon: Icon(Icons.home),
+            title: Text("Home"),
+            selectedColor: Colors.purple,
+          ),
+
+          /// Likes
+          SalomonBottomBarItem(
+            icon: Icon(Icons.favorite_border),
+            title: Text("Likes"),
+            selectedColor: Colors.pink,
+          ),
+
+          /// Search
+          SalomonBottomBarItem(
+            icon: Icon(Icons.search),
+            title: Text("Search"),
+            selectedColor: Colors.orange,
+          ),
+
+          /// Profile
+          SalomonBottomBarItem(
+            icon: Icon(Icons.person),
+            title: Text("Profile"),
+            selectedColor: Colors.teal,
+          ),
+        ],
       ),
     );
   }
