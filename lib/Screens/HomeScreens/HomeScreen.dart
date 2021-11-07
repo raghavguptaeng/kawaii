@@ -34,42 +34,6 @@ class _HomeScreenState extends State<HomeScreen> {
                 Profile()
               ],
             ),
-            // Align(
-            //   alignment: Alignment.bottomCenter,
-            //   child: SalomonBottomBar(
-            //     currentIndex: _currentIndex,
-            //     onTap: (i) => setState(() => _currentIndex = i),
-            //     items: [
-            //       /// Home
-            //       SalomonBottomBarItem(
-            //         icon: Icon(Icons.home),
-            //         title: Text("Home"),
-            //         selectedColor: Colors.purple,
-            //       ),
-            //
-            //       /// Likes
-            //       SalomonBottomBarItem(
-            //         icon: Icon(Icons.favorite_border),
-            //         title: Text("Likes"),
-            //         selectedColor: Colors.pink,
-            //       ),
-            //
-            //       /// Search
-            //       SalomonBottomBarItem(
-            //         icon: Icon(Icons.search),
-            //         title: Text("Search"),
-            //         selectedColor: Colors.orange,
-            //       ),
-            //
-            //       /// Profile
-            //       SalomonBottomBarItem(
-            //         icon: Icon(Icons.person),
-            //         title: Text("Profile"),
-            //         selectedColor: Colors.teal,
-            //       ),
-            //     ],
-            //   ),
-            // ),
           ],
         ),
       ),
@@ -86,15 +50,15 @@ class _HomeScreenState extends State<HomeScreen> {
 
           /// Likes
           SalomonBottomBarItem(
-            icon: Icon(Icons.favorite_border),
-            title: Text("Likes"),
+            icon: Icon(CupertinoIcons.cart),
+            title: Text("Cart"),
             selectedColor: Colors.pink,
           ),
 
           /// Search
           SalomonBottomBarItem(
-            icon: Icon(Icons.search),
-            title: Text("Search"),
+            icon: Icon(CupertinoIcons.heart),
+            title: Text("Favorites"),
             selectedColor: Colors.orange,
           ),
 
