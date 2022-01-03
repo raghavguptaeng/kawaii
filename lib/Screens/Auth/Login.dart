@@ -112,6 +112,7 @@ class _LoginState extends State<Login> {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   Center(child: LoginText()),
+                  Center(child:Text('Note this is a test application uploaded for recruters. paymnent gateway can be tested by using any of the test cards present on razorpay website') ,),
                   GestureDetector(
                     onTap: ()async{
                       _signIn().whenComplete(() {
