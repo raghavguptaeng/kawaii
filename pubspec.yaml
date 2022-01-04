@@ -37,6 +37,7 @@ dependencies:
   razorpay_flutter: ^1.2.6
   google_sign_in: ^5.0.7
   salomon_bottom_bar: ^3.1.0
+  flutter_automation: ^2.0.0
 
 dev_dependencies:
   flutter_test:

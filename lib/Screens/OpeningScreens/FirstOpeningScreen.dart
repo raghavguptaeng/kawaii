@@ -40,7 +40,7 @@ class _FirstScreenState extends State<FirstScreen> {
                       //fontWeight: FontWeight.bold
                     ),
                   ),
-                  Text("By Draam Collection",style: LoginFontStyle.copyWith(fontSize: 20),)
+                  Text("By Raghav Technologies",style: LoginFontStyle.copyWith(fontSize: 20),)
                 ],
               )
           ),

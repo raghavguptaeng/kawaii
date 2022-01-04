@@ -70,7 +70,7 @@ class BestSellerCard extends StatelessWidget {
                             ],
                           ),
                         ),
-                        Image.network(data['img'])
+                        Image.network(data['img'],width: MediaQuery.of(context).size.width*0.5,)
                       ],
                     ),
                   ),
